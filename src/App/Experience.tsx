@@ -12,7 +12,7 @@ function Experience(): JSX.Element {
       <Ground size={groundSize} />
 
       <Clouds material={MeshBasicMaterial} position={[0, 4.1, 0]}>
-        <Cloud segments={40} bounds={[2, 0, 2]} volume={1} color="white" opacity={0.6} />
+        <Cloud concentrate='outside' speed={0.2} segments={30} bounds={[2, 0, 2]} volume={1} color="white" opacity={0.6} />
       </Clouds>
 
       <ambientLight intensity={0.5} />
