@@ -8,7 +8,7 @@ function Experience(): JSX.Element {
 
   return (
     <group position={[0, 0, 0]}>
-      <Rain size={groundSize} position={[0, 2, 0]} />
+      <Rain size={groundSize} position={[0, 4, 0]} />
       <Ground size={groundSize} />
 
       <Clouds material={MeshBasicMaterial} position={[0, 4.1, 0]}>

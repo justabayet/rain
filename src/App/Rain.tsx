@@ -8,15 +8,27 @@ import { useControls } from 'leva'
 
 interface RainMaterial extends ShaderMaterial {
   time: number
+  dropWidth: number
+  opacity: number
+  dropSize: number
+  height: number
+  areaSize: number
+  speed: number
   rainColor: Color
   perlinTexture: Texture
   resolution: Vector2
 }
 
-const rainColor = new Color(0x0000FF)
+const rainColor = new Color(0xba7339)
 
 const shaderDefault = {
   time: 0,
+  dropWidth: 0.1,
+  opacity: 0.1,
+  dropSize: 0.3,
+  areaSize: 0,
+  height: 4,
+  speed: 5,
   rainColor,
   perlinTexture: null,
   resolution: null
@@ -41,12 +53,11 @@ extend({ RainMaterial })
 
 interface RainProps extends GroupProps {
   size?: number
-  height?: number
 }
 
 const v2 = new Vector2()
 
-function Rain({ size = 5, height = 5, ...props }: RainProps): JSX.Element {
+function Rain({ size = 5, ...props }: RainProps): JSX.Element {
   const count = 1000
 
   const rainMaterial = useRef<RainMaterial>(null)
@@ -54,13 +65,39 @@ function Rain({ size = 5, height = 5, ...props }: RainProps): JSX.Element {
   const perlinTexture = useTexture('./perlin.png', (texture) => {
     texture.wrapS = RepeatWrapping
     texture.wrapT = RepeatWrapping
-    texture.colorSpace = ''
   })
 
   const {
-    rainColor
+    rainColor,
+    dropWidth,
+    opacity,
+    dropSize,
+    height,
+    speed
   } = useControls({
     rainColor: `#${shaderDefault.rainColor.getHexString()}`,
+    opacity: {
+      value: shaderDefault.opacity,
+      min: 0,
+      max: 1
+    },
+    dropWidth: {
+      value: shaderDefault.dropWidth,
+      min: 0,
+      max: 1
+    },
+    dropSize: {
+      value: shaderDefault.dropSize,
+      min: 0,
+    },
+    height: {
+      value: shaderDefault.height,
+      min: 0,
+    },
+    speed: {
+      value: shaderDefault.speed,
+      min: 0,
+    },
   })
 
   // const [, getKeys] = useKeyboardControls()
@@ -99,12 +136,19 @@ function Rain({ size = 5, height = 5, ...props }: RainProps): JSX.Element {
 
   return (
     <group {...props}>
-      <Points positions={positions}>
+      <Points positions={positions} >
         <rainMaterial
           ref={rainMaterial}
           perlinTexture={perlinTexture}
           rainColor={rainColor}
           resolution={resolution}
+          dropWidth={dropWidth}
+          opacity={opacity}
+          dropSize={dropSize}
+          height={height}
+          areaSize={size}
+          speed={speed}
+          transparent
         />
       </Points>
     </group>
