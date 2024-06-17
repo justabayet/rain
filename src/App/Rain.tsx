@@ -19,15 +19,15 @@ interface RainMaterial extends ShaderMaterial {
   resolution: Vector2
 }
 
-const rainColor = new Color(0xba7339)
+const rainColor = new Color('#000000')
 
 const shaderDefault = {
   time: 0,
-  dropWidth: 0.1,
+  dropWidth: 0.02,
   opacity: 0.1,
-  dropSize: 0.3,
+  dropSize: 0.5,
   areaSize: 0,
-  height: 4,
+  height: 4.6,
   speed: 5,
   rainColor,
   perlinTexture: null,
@@ -136,7 +136,7 @@ function Rain({ size = 5, ...props }: RainProps): JSX.Element {
 
   return (
     <group {...props}>
-      <Points positions={positions} >
+      <Points positions={positions}>
         <rainMaterial
           ref={rainMaterial}
           perlinTexture={perlinTexture}

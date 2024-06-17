@@ -16,7 +16,7 @@ function App(): JSX.Element {
           fov: 45,
           near: 0.1,
           far: 200,
-          position: [-7, 5, 5]
+          position: [-15, 5, 4]
         }} >
 
         <Experience />
