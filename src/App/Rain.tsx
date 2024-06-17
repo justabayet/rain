@@ -28,7 +28,7 @@ const shaderDefault = {
   dropSize: 0.5,
   areaSize: 0,
   height: 4.6,
-  speed: 5,
+  speed: 2.5,
   rainColor,
   perlinTexture: null,
   resolution: null
