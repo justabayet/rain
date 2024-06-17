@@ -10,6 +10,8 @@ function App(): JSX.Element {
     <KeyboardControls map={[
       { name: 'forward', keys: ['ArrowUp', 'KeyW'] },
       { name: 'backward', keys: ['ArrowDown', 'KeyS'] },
+      { name: 'previous', keys: ['ArrowLeft', 'KeyA'] },
+      { name: 'next', keys: ['ArrowRight', 'KeyD'] },
     ]}>
       <Canvas
         camera={{
