@@ -8,6 +8,7 @@ uniform float height;
 uniform float areaSize;
 uniform float speed;
 
+attribute vec3 custom;
 varying vec2 groundUv;
 varying float currentY;
 

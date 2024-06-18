@@ -1,7 +1,7 @@
-import { GroupProps, ReactThreeFiber, extend, useFrame, useThree } from '@react-three/fiber'
+import { PointsProps, ReactThreeFiber, extend, useFrame, useThree } from '@react-three/fiber'
 import rainVertexShader from './shaders/rain/vertex.glsl'
 import rainFragmentShader from './shaders/rain/fragment.glsl'
-import { Points, shaderMaterial, useTexture } from '@react-three/drei'
+import { shaderMaterial, useTexture } from '@react-three/drei'
 import { ShaderMaterial, Texture, Color, RepeatWrapping, Vector2 } from 'three'
 import { useMemo, useRef } from 'react'
 import { useControls } from 'leva'
@@ -51,7 +51,7 @@ declare global {
 
 extend({ RainMaterial })
 
-interface RainProps extends GroupProps {
+interface RainProps extends PointsProps {
   size?: number
 }
 
@@ -110,8 +110,9 @@ function Rain({ size = 5, ...props }: RainProps): JSX.Element {
     }
   })
 
-  const positions = useMemo(() => {
+  const { positions, custom } = useMemo(() => {
     const positions = []
+    const custom = []
 
     const origin = new Vector2(-size / 2, -size / 2)
 
@@ -123,9 +124,13 @@ function Rain({ size = 5, ...props }: RainProps): JSX.Element {
       const translation = origin.clone().add(position)
 
       positions.push(translation.x, 0, translation.y)
+      custom.push(0, 0, 0)
     }
 
-    return new Float32Array(positions)
+    return {
+      positions: new Float32Array(positions),
+      custom: new Float32Array(custom)
+    }
   }, [size])
 
   const { gl } = useThree()
@@ -135,23 +140,36 @@ function Rain({ size = 5, ...props }: RainProps): JSX.Element {
   const resolution = new Vector2(sizes.x * pixelRatio, sizes.y * pixelRatio)
 
   return (
-    <group {...props}>
-      <Points positions={positions}>
-        <rainMaterial
-          ref={rainMaterial}
-          perlinTexture={perlinTexture}
-          rainColor={rainColor}
-          resolution={resolution}
-          dropWidth={dropWidth}
-          opacity={opacity}
-          dropSize={dropSize}
-          height={height}
-          areaSize={size}
-          speed={speed}
-          transparent
+    <points {...props}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach='attributes-position'
+          array={positions}
+          count={positions.length / 3}
+          itemSize={3}
         />
-      </Points>
-    </group>
+        <bufferAttribute
+          attach='attributes-custom'
+          array={custom}
+          count={custom.length / 3}
+          itemSize={3}
+        />
+      </bufferGeometry>
+
+      <rainMaterial
+        ref={rainMaterial}
+        perlinTexture={perlinTexture}
+        rainColor={rainColor}
+        resolution={resolution}
+        dropWidth={dropWidth}
+        opacity={opacity}
+        dropSize={dropSize}
+        height={height}
+        areaSize={size}
+        speed={speed}
+        transparent
+      />
+    </points>
   )
 }
 

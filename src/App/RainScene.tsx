@@ -65,7 +65,6 @@ function RainScene(): JSX.Element {
 
       <Ground size={10} />
 
-
       <Clouds material={MeshBasicMaterial} position={[0, 4.6, 0]}>
         <Cloud
           concentrate='outside'
