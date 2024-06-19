@@ -23,7 +23,7 @@ function App(): JSX.Element {
 
         <Experience />
 
-        <OrbitControls zoomSpeed={0.3} />
+        <OrbitControls zoomSpeed={1} />
 
         {/* <Perf position="top-left" /> */}
       </Canvas>

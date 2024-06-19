@@ -56,7 +56,7 @@ function RainScene(): JSX.Element {
 
   return (
     <group position={[0, 0, 0]}>
-      <Rain size={groundSize} position={[0, 4.3, 0]} />
+      <Rain size={groundSize} position={[0, 4.4, 0]} />
 
       {/* <mesh position={[0, 0.5, 0]}>
         <boxGeometry />
@@ -65,7 +65,7 @@ function RainScene(): JSX.Element {
 
       <Ground size={10} />
 
-      <Clouds material={MeshBasicMaterial} position={[0, 4.6, 0]}>
+      <Clouds material={MeshBasicMaterial} position={[0, 5.6, 0]}>
         <Cloud
           concentrate='outside'
           speed={0.1}

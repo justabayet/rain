@@ -10,10 +10,12 @@ interface RainMaterial extends ShaderMaterial {
   time: number
   dropWidth: number
   opacity: number
+  opacityRipple: number
   dropSize: number
   height: number
   areaSize: number
   speed: number
+  rippleThickness: number
   rainColor: Color
   perlinTexture: Texture
   resolution: Vector2
@@ -24,11 +26,13 @@ const rainColor = new Color('#000000')
 const shaderDefault = {
   time: 0,
   dropWidth: 0.02,
-  opacity: 0.1,
+  opacity: 0.15,
+  opacityRipple: 0.75,
   dropSize: 0.5,
   areaSize: 0,
-  height: 4.6,
+  height: 4.3,
   speed: 2.5,
+  rippleThickness: 0.12,
   rainColor,
   perlinTexture: null,
   resolution: null
@@ -71,13 +75,20 @@ function Rain({ size = 5, ...props }: RainProps): JSX.Element {
     rainColor,
     dropWidth,
     opacity,
+    opacityRipple,
     dropSize,
     height,
-    speed
+    speed,
+    rippleThickness
   } = useControls({
     rainColor: `#${shaderDefault.rainColor.getHexString()}`,
     opacity: {
       value: shaderDefault.opacity,
+      min: 0,
+      max: 1
+    },
+    opacityRipple: {
+      value: shaderDefault.opacityRipple,
       min: 0,
       max: 1
     },
@@ -97,6 +108,11 @@ function Rain({ size = 5, ...props }: RainProps): JSX.Element {
     speed: {
       value: shaderDefault.speed,
       min: 0,
+    },
+    rippleThickness: {
+      value: shaderDefault.rippleThickness,
+      min: 0,
+      max: 0.5
     },
   })
 
@@ -163,10 +179,12 @@ function Rain({ size = 5, ...props }: RainProps): JSX.Element {
         resolution={resolution}
         dropWidth={dropWidth}
         opacity={opacity}
+        opacityRipple={opacityRipple}
         dropSize={dropSize}
         height={height}
         areaSize={size}
         speed={speed}
+        rippleThickness={rippleThickness}
         transparent
       />
     </points>
