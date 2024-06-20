@@ -18,12 +18,12 @@ function App(): JSX.Element {
           fov: 45,
           near: 0.1,
           far: 200,
-          position: [-15, 5, 4]
+          position: [-15, 8, 0]
         }} >
 
         <Experience />
 
-        <OrbitControls zoomSpeed={1} />
+        <OrbitControls zoomSpeed={1} target={[0, 3, 0]} />
 
         {/* <Perf position="top-left" /> */}
       </Canvas>

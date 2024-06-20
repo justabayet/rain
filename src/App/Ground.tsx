@@ -11,7 +11,7 @@ function Ground({ size = 5, ...props }: GroundProps): JSX.Element {
   const {
     groundColor,
   } = useControls({
-    groundColor: '#b48282',
+    groundColor: '#688094',
   })
 
   return (
