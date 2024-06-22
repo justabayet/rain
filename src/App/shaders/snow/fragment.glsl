@@ -3,6 +3,7 @@
 uniform float time;
 uniform vec3 snowInnerColor;
 uniform vec3 snowOuterColor;
+uniform float snowColorFadeFactor;
 uniform float opacity;
 uniform sampler2D perlinTexture;
 
@@ -19,7 +20,7 @@ void main() {
     if(distanceToCenter > 0.5 - 0.2 * sizeOffset)
         discard;
 
-    float radialFactor = remapReciprocal(1.0 - distanceToCenter * 2.0, 1.0);
+    float radialFactor = remapReciprocal(1.0 - distanceToCenter * 2.0, snowColorFadeFactor);
     vec3 color = mix(snowOuterColor, snowInnerColor, radialFactor);
 
     float groundOpacity = 1.0 - pow(animFadeProgress, 2.0);

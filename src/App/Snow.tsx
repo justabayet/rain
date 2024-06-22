@@ -15,6 +15,7 @@ interface SnowMaterial extends ShaderMaterial {
   height: number
   areaSize: number
   speed: number
+  snowColorFadeFactor: number
   rippleThickness: number
   snowInnerColor: Color
   snowOuterColor: Color
@@ -33,8 +34,9 @@ const shaderDefault = {
   dropSize: 0.1,
   areaSize: 0,
   height: 4.3,
-  speed: 0.1,
+  speed: 0.25,
   rippleThickness: 0.12,
+  snowColorFadeFactor: 1.0,
   snowInnerColor,
   snowOuterColor,
   perlinTexture: null,
@@ -84,9 +86,14 @@ function Snow({ size = 5, ...props }: SnowProps): JSX.Element {
     rippleThickness,
     snowInnerColor,
     snowOuterColor,
+    snowColorFadeFactor,
   } = useControls({
     snowInnerColor: `#${shaderDefault.snowInnerColor.getHexString()}`,
     snowOuterColor: `#${shaderDefault.snowOuterColor.getHexString()}`,
+    snowColorFadeFactor: {
+      value: shaderDefault.snowColorFadeFactor,
+      min: 0,
+    },
     opacity: {
       value: shaderDefault.opacity,
       min: 0,
@@ -199,6 +206,7 @@ function Snow({ size = 5, ...props }: SnowProps): JSX.Element {
         height={height}
         areaSize={size}
         speed={speed}
+        snowColorFadeFactor={snowColorFadeFactor}
         rippleThickness={rippleThickness}
         // blending={AdditiveBlending}
         transparent
